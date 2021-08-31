@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.billbrocker.chklist2',
   appName: 'chklist2',
   webDir: 'www',
   bundledWebRuntime: false
