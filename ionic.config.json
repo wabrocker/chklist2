@@ -1,0 +1,7 @@
+{
+  "name": "chklist2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
