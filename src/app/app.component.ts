@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
+import { ChecklistService } from './services/checklist.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar } from '@capacitor/status-bar';
-
-import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +10,12 @@ import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 })
 export class AppComponent {
   storage: any;
-  constructor() {
+  constructor(private checklistService: ChecklistService) {
     this.initializeApp();
   }
 
   async initializeApp() {
+    await this.checklistService.load();
     SplashScreen.hide().catch((err) => {
       console.warn(err);
     });

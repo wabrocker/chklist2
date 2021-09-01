@@ -20,7 +20,14 @@ export class ChecklistService {
   }
 
   async load(): Promise<void> {
-    return Promise.resolve();
+    if (!this.loaded) {
+      const checklists = await this.storage.get('checklists');
+      if (checklists !== null) {
+        this.checklists = checklists;
+        this.checklists$.next(this.checklists);
+      }
+      this.loaded = true;
+    }
   }
 
   getChecklists(): Observable<Checklist[]> {
@@ -54,7 +61,7 @@ export class ChecklistService {
 
   async updateChecklistIcon(checklistId: string, newIcon: string): Promise<void> {
     this.checklists = this.checklists.map((checklist) =>
-      checklist.id === checklistId ? { ...checklist, title: newIcon } : checklist);
+      checklist.id === checklistId ? { ...checklist, ionicon: newIcon } : checklist);
 
     this.save();
   }
@@ -101,7 +108,7 @@ export class ChecklistService {
         ? { ...checklist,
             items: [
               ...checklist.items.map((item) =>
-                item.id === itemId ? { ...item, title: newIcon } : item ), ],
+                item.id === itemId ? { ...item, ionicon: newIcon } : item ), ],
           }
         : checklist);
     this.save();
@@ -136,7 +143,7 @@ export class ChecklistService {
 
   save(): Promise<void> {
     this.checklists$.next(this.checklists);
-    return Promise.resolve();
+    return this.storage.set('checklists', this.checklists);
   }
 
   generateSlug(title: string): string {
