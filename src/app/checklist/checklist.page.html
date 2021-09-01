@@ -19,7 +19,10 @@
   <ion-list lines="none">
     <ion-item-sliding *ngFor="let item of checklist.items">
       <ion-item color="success">
-        <ion-label>{{ item.title }}</ion-label>
+        <ion-label>
+          <ion-icon size="large" [name]="item.ionicon"></ion-icon>
+          {{ item.title }}
+        </ion-label>
         <ion-checkbox
           color="light"
           [checked]="item.checked"
@@ -27,6 +30,9 @@
         ></ion-checkbox>
       </ion-item>
       <ion-item-options side="end">
+        <ion-item-option color="light" (click)="resetItemIcon(item)">
+          <ion-icon slot="icon-only" name="cog-outline"></ion-icon>
+        </ion-item-option>
         <ion-item-option color="light" (click)="renameItem(item)">
           <ion-icon slot="icon-only" name="clipboard"></ion-icon>
         </ion-item-option>

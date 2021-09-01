@@ -16,6 +16,7 @@ export class ChecklistPage implements OnInit, OnDestroy {
   public checklist: Checklist = {
     id: '',
     title: '',
+    ionicon: '',
     items: [],
   };
   private checklistSubscription: Subscription;
@@ -78,6 +79,26 @@ export class ChecklistPage implements OnInit, OnDestroy {
     alert.present();
   }
 
+  async resetItemIcon(item: ChecklistItem): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: 'Rename Item',
+      message: `Enter the new name of the Icon for this item below: (vs ${item.ionicon})`,
+      inputs: [ {
+        type: 'text',
+        name: 'iname'
+      }, ],
+      buttons: [ {
+        text: 'Cancel',
+      }, {
+        text: 'Save',
+        handler: (data) => {
+          this.checklistService.updateItemIconInChecklist(this.checklist.id, item.id, data.iname);
+          this.slidingList.closeSlidingItems();
+        },
+      }, ],
+    });
+    alert.present();
+  }
 
   async removeItem(item: ChecklistItem): Promise<void> {
     await this.slidingList.closeSlidingItems();

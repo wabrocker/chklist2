@@ -21,10 +21,16 @@
     <ion-list lines="none">
       <ion-item-sliding *ngFor="let checklist of checklists">
         <ion-item routerLink="/checklists/{{checklist.id}}" routerDirection="forward">
-          <ion-label>{{ checklist.title }}</ion-label>
+          <ion-label>
+            <ion-icon size="large" [name]="checklist.ionicon"></ion-icon>
+            {{ checklist.title }}
+          </ion-label>
           <span>{{ checklist.items.length }} items</span>
         </ion-item>
         <ion-item-options side="end">
+          <ion-item-option color="light" (click)="resetChecklistIcon(checklist)">
+            <ion-icon slot="icon-only" name="cog-outline"></ion-icon>
+          </ion-item-option>
           <ion-item-option color="light" (click)="renameChecklist(checklist)">
             <ion-icon slot="icon-only" name="clipboard"></ion-icon>
           </ion-item-option>

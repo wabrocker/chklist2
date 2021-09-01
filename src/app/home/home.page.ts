@@ -68,6 +68,27 @@ export class HomePage implements OnInit {
     alert.present();
   }
 
+  async resetChecklistIcon(checklist: Checklist): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: 'Reset Checklist Icon',
+      message: `Enter the new name of the icon for this checklist below: (vs ${checklist.ionicon})`,
+      inputs: [
+        {
+          type: 'text',
+          name: 'name',
+        }, ],
+      buttons: [ {
+        text: 'Cancel',
+      }, {
+        text: 'Save',
+        handler: async (data) => {
+          await this.checklistService.updateChecklistIcon(checklist.id, data.name);
+          this.slidingList.closeSlidingItems();
+        }, }, ],
+    });
+    alert.present();
+  }
+
   async removeChecklist(checklist: Checklist): Promise<void> {
     await this.slidingList.closeSlidingItems();
     this.checklistService.removeChecklist(checklist.id);
